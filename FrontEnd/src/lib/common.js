@@ -39,9 +39,6 @@ export async function getBooks() {
     const response = await axios({
       method: 'GET',
       url: `${API_ROUTES.BOOKS}`,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
     });
     // eslint-disable-next-line array-callback-return
     const books = formatBooks(response.data);
