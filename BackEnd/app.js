@@ -22,13 +22,12 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/books', (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  // Si aucun token n'est fourni dans les headers, l'accès est en lecture seule pour les utilisateurs non connectés
-  if (!token) {
-      const tempToken = jwt.sign({ userId: 'publicUser' }, process.env.TOKEN_SECRET, { expiresIn: '24h' });
-      req.headers.authorization = `Bearer ${tempToken}`;
-  }
-  next();
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        const tempToken = jwt.sign({ userId: 'publicUser' }, process.env.TOKEN_SECRET, { expiresIn: '24h' });
+        req.headers.authorization = `Bearer ${tempToken}`;
+    }
+    next();
 });
 
 app.use('/api/books', bookRoutes);

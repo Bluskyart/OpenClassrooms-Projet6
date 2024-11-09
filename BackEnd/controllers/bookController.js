@@ -1,4 +1,3 @@
-// bookController.js
 const Book = require('../models/Book');
 const fs = require('fs');
 
@@ -69,7 +68,7 @@ exports.getAllBooks = (req, res, next) => {
 
 exports.rateBook = async (req, res, next) => {
   const userId = req.auth.userId;
-  const ratingValue = parseInt(req.body.rating, 10);
+  const ratingValue = req.body.rating;
 
   if (isNaN(ratingValue) || ratingValue < 0 || ratingValue > 5) {
       return res.status(400).json({ message: 'La note doit être comprise entre 0 et 5.' });
@@ -77,28 +76,26 @@ exports.rateBook = async (req, res, next) => {
 
   try {
       const book = await Book.findOne({ _id: req.params.id });
-
       if (!book) {
           return res.status(404).json({ message: 'Livre non trouvé' });
       }
 
-      const existingRating = book.rating.find(rating => rating.userId === userId);
-
+      const existingRating = book.ratings.find(rating => rating.userId === userId);
       if (existingRating) {
           return res.status(400).json({ message: 'Vous avez déjà noté ce livre.' });
       }
 
-      book.rating.push({ userId, grade: ratingValue });
+      book.ratings.push({ ...req.body, grade: ratingValue });
 
-      const totalRating = book.rating.reduce((sum, rate) => sum + rate.grade, 0);
-      book.averageRating = parseFloat((totalRating / book.rating.length).toFixed(1));
+      const totalRating = book.ratings.reduce((sum, rate) => sum + rate.grade, 0);
+      const average = totalRating / book.ratings.length;
+      book.averageRating = Math.ceil(average);
 
-      await book.save();
-
-      res.status(200).json({
-          message: 'Notation ajoutée avec succès',
-          book
-      });
+      return book.save().then(updatedBook => {
+        res.status(200).json(updatedBook);
+    }).catch(error => {
+        res.status(400).json({ error });
+    });
   } catch (error) {
       res.status(500).json({ error });
   }

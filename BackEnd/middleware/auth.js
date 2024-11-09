@@ -5,7 +5,6 @@ module.exports = (req, res, next) => {
         const token = req.headers.authorization?.split(' ')[1];
         
         if (!token) {
-            // Permettre l'accès en lecture seule si aucun token n'est fourni
             req.auth = { userId: 'publicUser' };
             return next();
         }
