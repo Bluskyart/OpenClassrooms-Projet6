@@ -9,7 +9,7 @@ Kévin me contacte pour me proposer de travailler avec lui en mutualisant nos co
 Il s’agit d’une petite chaîne de librairies qui souhaite ouvrir un site de référencement et de notation de livres : Mon Vieux Grimoire.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/528e06cf-dfdd-45aa-b788-aa32f6fa549e" alt="1680512368252_Kasa logo">
+  <img src="https://github.com/user-attachments/assets/b8407fc7-491d-4e0d-8c7a-10e4d344be70" alt="1680512368252_Kasa logo">
 </p>
 
 Voici l’e-mail qu’il m'envoie : 
