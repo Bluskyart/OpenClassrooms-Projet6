@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bookRoutes = require('./routes/bookRoutes');
-const userRoutes = require('./routes/user');
+const userRoutes = require('./routes/userRoutes');
 const path = require('path');
 
 const app = express();
